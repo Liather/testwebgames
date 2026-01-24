@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Room</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='room.css') }}">
+    </head>
+
+    <body>
+        <h1 id="title">ROOM CODE: Loading...</h1>
+
+        <input type="text" id="nicknameInput" maxlength="20"/>
+        <button id="setNicknameButton">Set Nickname</button>
+        <br/>
+
+        <h3>Players</h3>
+        <ul id="playerData"></ul>
+
+        <h3>Game Data</h3>
+        <div id="gameData"></div>
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+        <script src="{{ url_for('static', filename='room.js') }}"></script>
+    </body>
+</html>
