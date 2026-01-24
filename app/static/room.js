@@ -53,17 +53,23 @@ socket.on('playerData', (data) => {
     players.forEach(player => {
         const li = document.createElement("li");
 
+        // needs to change the width of the li
+        if(player.isHost) {
+            li.style.backgroundColor = "#ffd700";
+        }
+
         const nameSpan = document.createElement("span");
         nameSpan.textContent = player.playerNickname;
         li.appendChild(nameSpan);
 
+        const roleSpan = document.createElement("span");
+        roleSpan.textContent = ` (${player.playerRole})`;
+        li.appendChild(roleSpan);
+
+        // show host controls
         if(player.isHost && player.playerID == playerID) {
-            console.log("Jobby")
+            console.log("Placeholder for host controls");
         }
-
-
-
-
 
         playerDataElement.appendChild(li);
         //console.log(player.isHost);
