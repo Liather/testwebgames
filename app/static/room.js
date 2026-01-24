@@ -46,15 +46,27 @@ socket.on('error', (data) => {
     // add event listener for buttons
 socket.on('playerData', (data) => {
     const players = data.players;
-
-    playerDataElement = document.getElementById("playerData");
+    
+    playerDataElement = document.getElementById("playerData"); //ul
     playerDataElement.innerHTML = "";
 
     players.forEach(player => {
         const li = document.createElement("li");
-        li.textContent = player.playerNickname;
+
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = player.playerNickname;
+        li.appendChild(nameSpan);
+
+        if(player.playerID == playerID && player.isHost) {
+            console.log("Jobby")
+        }
+
+
+
+
+
         playerDataElement.appendChild(li);
-        console.log(player.isHost);
+        //console.log(player.isHost);
     });
 })
 
