@@ -35,7 +35,8 @@ class Room:
             players.append({
                 "playerID": player,
                 "playerNickname": self.players[player]["playerNickname"],
-                "playerRole": self.players[player]["playerRole"]
+                "playerRole": self.players[player]["playerRole"],
+                "isHost": player == self.hostPlayerID
             })
         return players
 

@@ -33,6 +33,7 @@ def joinRoomRequest(data):
     else:
         emit('error', {'message': 'Room not found'}, to=playerSID)
 
+# ---- Room Sockets ----------------------------------------------------------------
 @socketio.on('joinedRoom')
 def joinedRoom(data):
     playerSID = request.sid

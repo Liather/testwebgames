@@ -6,6 +6,8 @@ let playerID = localStorage.getItem("playerID");
 if (!playerID) { // TODO - OR IF PLAYERID IS NOT PART OF PLAYERS IN ROOM
     // if no playerID (can only get on index.html) -> send back to index.html
     window.location.href = `/`;
+    // Maybe send the player an alert saying no playerID was found
+        // - Let's them know why they were sent back to the home page
 }
 
 const roomCode = new URLSearchParams(window.location.search).get('code');
@@ -25,6 +27,7 @@ document.getElementById('setNicknameButton').addEventListener('click', () => {
         "playerID": playerID,
         "roomCode": roomCode
     });
+    document.getElementById("nicknameInput").value = ""; // clear nickname input
 });
 
 // socket on
@@ -51,9 +54,11 @@ socket.on('playerData', (data) => {
         const li = document.createElement("li");
         li.textContent = player.playerNickname;
         playerDataElement.appendChild(li);
+        console.log(player.isHost);
     });
 })
 
+// Show game data
 socket.on('gameData', (data) => {
     console.log(data);
 });
