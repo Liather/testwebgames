@@ -57,7 +57,7 @@ socket.on('playerData', (data) => {
         nameSpan.textContent = player.playerNickname;
         li.appendChild(nameSpan);
 
-        if(player.isHost && player.playerID !== playerID){ {
+        if(player.isHost && player.playerID == playerID) {
             console.log("Jobby")
         }
 
