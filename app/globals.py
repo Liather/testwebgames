@@ -1,6 +1,6 @@
 from app.roomManager import roomManager
 
-roomManager = roogmManager()
+roomManager = roomManager()
 
 def findGames():
     # look through the games folder
