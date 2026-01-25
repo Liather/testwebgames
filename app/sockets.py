@@ -1,6 +1,6 @@
 from app import socketio
 from flask import request
-from app.globals import roomManager
+from app.globals import roomManager, availableGames
 from flask_socketio import emit, join_room
 
 @socketio.on('createRoom_request')
@@ -69,6 +69,12 @@ def joinedRoom(data):
     players = room.getPlayerData()
     emit('playerData', {'players': players}, room=roomCode)
 
+    emit('availableGames', {'availableGames': availableGames}, to=playerSID)
+
+    selectedGame = room.getSelectedGame()
+    emit('selectedGame', {'selectedGame': selectedGame}, room=roomCode)
+
+
     # GAME DATA
     # game selected
     # game settings
@@ -93,6 +99,20 @@ def setNicknameRequest(data):
     else:
         emit('error', {'message': 'Could not set nickname'}, to=playerSID)
         return
+
+@socketio.on('setSelectedGame')
+def setSelectedGame(data):
+    # check if player is host
+    playerID = data['playerID']
+    roomCode = data['roomCode']
+    selectedGame = data['selectedGame']
+
+    room = roomManager.getRoom(roomCode)
+
+    room.setSelectedGame(selectedGame)
+    emit('selectedGame', {'selectedGame': selectedGame}, room=roomCode)
+
+
 
 
 '''

@@ -51,3 +51,9 @@ class Room:
             self.players[playerID]["playerNickname"] = newNickname
             return True
         return False
+
+    def getSelectedGame(self):
+        return self.selectedGame
+
+    def setSelectedGame(self, selectedGame):
+        self.selectedGame = selectedGame

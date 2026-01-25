@@ -1,0 +1,10 @@
+{
+    "expectedFiles": ["game.html", "game.js", "sockets.py", "game.py"],
+    
+    "gameconfig": {
+        "name": "Bananagrams",
+        "description": "Bananagrams",
+        "minPlayers": 2,
+        "maxPlayers": 8        
+    }
+}

@@ -19,7 +19,7 @@ socket.emit('joinedRoom', {
     'playerID': playerID
 });
 
-// button event listeners
+// Event listeners
 document.getElementById('setNicknameButton').addEventListener('click', () => {
     var newNickname = document.getElementById("nicknameInput").value;
     socket.emit('setNicknameRequest', { 
@@ -29,6 +29,14 @@ document.getElementById('setNicknameButton').addEventListener('click', () => {
     });
     document.getElementById("nicknameInput").value = ""; // clear nickname input
 });
+
+function dropdownOnSelect(value){
+    socket.emit('setSelectedGame', {
+        'selectedGame': value,
+        'playerID': playerID,
+        'roomCode': roomCode
+    });
+}
 
 // socket on
 
@@ -76,9 +84,34 @@ socket.on('playerData', (data) => {
     });
 })
 
-// Show game data
-socket.on('gameData', (data) => {
+socket.on('selectedGame', (data) => {
     console.log(data);
+    const selectedGameElement = document.getElementById("selectedGame");
+    selectedGameElement.textContent = `Selected Game: ${data.selectedGame}`;
+});
+
+// Show game data
+socket.on('availableGames', (data) => {
+    const gameSelectElement = document.getElementById("gameSelect");
+    gameSelectElement.innerHTML = "";
+
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Choose game";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    gameSelectElement.appendChild(defaultOption);
+
+    data.availableGames.forEach(game => {
+        const option = document.createElement("option");
+        option.value = game;
+        option.textContent = game;
+        gameSelectElement.appendChild(option);
+    });
+    console.log(data);
+
+    // GAME CONFIG
+
 });
 
 // gameData

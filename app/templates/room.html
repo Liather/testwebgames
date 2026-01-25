@@ -7,13 +7,14 @@
 
     <body>
         <h1 id="title">ROOM CODE: Loading...</h1>
+        <h2 id="selectedGame"></h2>
 
         <h3>Choose game:</h3>
-        <select id="gameSelect">
-            <option value="game1">Bananagrams</option>
-            <option value="game2">Skip Bo</option>
-            <option value="game3">Wordle</option>
-        </select>
+        <select onChange="dropdownOnSelect(this.value)" id="gameSelect"></select>
+
+        <br>
+        <br>
+        <br>
 
         <input type="text" id="nicknameInput" maxlength="20"/>
         <button id="setNicknameButton">Set Nickname</button>
