@@ -49,6 +49,7 @@ function dropdownOnSelect(value){
 
 // error messages
 socket.on('error', (data) => {
+    console.log(data);
     if (data.message == "invalidPlayer") {
         window.location.href = `/`;
     }
