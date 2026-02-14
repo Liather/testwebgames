@@ -79,7 +79,6 @@ def joinedRoom(data):
     # game selected
     # game settings
 
-
 @socketio.on('setNicknameRequest')
 def setNicknameRequest(data):
     playerSID = request.sid
@@ -123,9 +122,10 @@ def handleStartGame(data):
     selectedGame = room.getSelectedGame()
 
     if room.isHost(playerID):
+        emit(f'setup{selectedGame}', {'Start': start}, room=roomCode)
         emit('startGame', {'url': f"/game/{selectedGame}?code={roomCode}"}, room=roomCode)
     else:
-        emit('error', {'message': f'You are not Host. Ask "<b>{room.getHostName()}</b>" to start the game'}, to=playerSID)
+        emit('error', {'message': f'You are not Host. Ask "{room.getHostName()}" to start the game'}, to=playerSID)
 
 
 
