@@ -112,6 +112,18 @@ def setSelectedGame(data):
     room.setSelectedGame(selectedGame)
     emit('selectedGame', {'selectedGame': selectedGame}, room=roomCode)
 
+@socketio.on('startGameRequest')
+def handleStartGame(data):
+    playerID = data["playerID"]
+    roomCode = data['roomCode']
+    
+    room = roomManager.getRoom(roomCode)
+
+    if room.isHost(playerID):
+        print("Start game")
+    else:
+        print("You need to be host to start the game")
+
 
 
 

@@ -30,6 +30,13 @@ document.getElementById('setNicknameButton').addEventListener('click', () => {
     document.getElementById("nicknameInput").value = ""; // clear nickname input
 });
 
+document.getElementById('startGameButton').addEventListener('click', () => {
+    socket.emit('startGameRequest', {
+        "playerID": playerID,
+        "roomCode": roomCode
+    });
+});
+
 function dropdownOnSelect(value){
     socket.emit('setSelectedGame', {
         'selectedGame': value,
@@ -119,3 +126,8 @@ socket.on('availableGames', (data) => {
     // gameConfig
         // only allow host to change game config
             // Check playerID (ifHost) when game config change request made to ensure no inspect element shananagins
+ 
+socket.on('startGame', (data) => {
+    console.log("START THE GAME");
+    console.log(data)
+});

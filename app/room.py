@@ -53,6 +53,7 @@ class Room:
         return False
 
     def getSelectedGame(self):
+        print(self.roomCode, ": ", "selected game - ", self.selectedGame)
         return self.selectedGame
 
     def setSelectedGame(self, selectedGame):
