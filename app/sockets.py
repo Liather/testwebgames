@@ -114,6 +114,7 @@ def setSelectedGame(data):
 
 @socketio.on('startGameRequest')
 def handleStartGame(data):
+    playerSID = request.sid
     playerID = data["playerID"]
     roomCode = data['roomCode']
     
