@@ -52,6 +52,7 @@ def joinedRoom(data):
     '''
 
     #update player sid
+    print(playerSID)
     if not room.updatePlayerSID(playerID, playerSID):
         emit('error', {'message': 'cant update player sid'}, to=playerSID)
 
