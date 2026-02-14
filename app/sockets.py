@@ -51,18 +51,17 @@ def joinedRoom(data):
     CHECK IF BLACKLISTED PLAYER
     '''
 
+    # add player to room
+    if not roomManager.addPlayerToRoom(roomCode, playerID, playerSID):
+        emit('error', {'message': 'cant add player to room'}, to=playerSID)
+
     #update player sid
-    print(playerSID)
     if not room.updatePlayerSID(playerID, playerSID):
         emit('error', {'message': 'cant update player sid'}, to=playerSID)
 
     # check if valid player
     '''if not room.isPlayer(playerID):
         emit('error', {'message': 'invalidPlayer'}, to=playerSID)'''
-
-    # add player to room
-    if not roomManager.addPlayerToRoom(roomCode, playerID, playerSID):
-        emit('error', {'message': 'cant add player to room'}, to=playerSID)
 
     join_room(roomCode)
 

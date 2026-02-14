@@ -18,12 +18,8 @@ class Room:
     
     def updatePlayerSID(self, playerID, newSID):
         if playerID in self.players:
-            print("poop1")
             self.players[playerID]["playerSID"] = newSID
-            print("poop2")
             return True
-        print(newSID)
-        print("poop3")
         return False
 
     def addPlayer(self, playerID, playerSID):
