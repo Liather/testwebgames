@@ -49,7 +49,7 @@ function dropdownOnSelect(value){
 
 // error messages
 socket.on('error', (data) => {
-    alert(data);
+    alert(data.message);
 
     //send player back to index if no uuid
     if (data.message == "invalidPlayer") {
