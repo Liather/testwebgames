@@ -49,7 +49,9 @@ function dropdownOnSelect(value){
 
 // error messages
 socket.on('error', (data) => {
-    console.log(data);
+    alert(data);
+
+    //send player back to index if no uuid
     if (data.message == "invalidPlayer") {
         window.location.href = `/`;
     }
