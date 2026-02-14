@@ -58,3 +58,6 @@ class Room:
 
     def setSelectedGame(self, selectedGame):
         self.selectedGame = selectedGame
+
+    def getHostName(self):
+        return self.players[self.hostPlayerID]["playerNickname"]

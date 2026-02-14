@@ -125,7 +125,7 @@ def handleStartGame(data):
     if room.isHost(playerID):
         emit('startGame', {'url': f"/game/{selectedGame}?code={roomCode}"}, room=roomCode)
     else:
-        emit('error', {'message': 'You are not Host'}, to=playerSID)
+        emit('error', {'message': f'You are not Host. Ask {room.getHostName} to start the game'}, to=playerSID)
 
 
 
