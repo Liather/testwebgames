@@ -119,11 +119,12 @@ def handleStartGame(data):
     
     room = roomManager.getRoom(roomCode)
 
-    if room.isHost(playerID):
-        print("Start game")
-    else:
-        print("You need to be host to start the game")
+    selectedGame = room.getSelectedGame()
 
+    if room.isHost(playerID):
+        emit('startGame', {'url': f"/game/{selectedGame}?code={roomCode}"}, room=roomCode)
+    else:
+        emit('error', {'message': 'You are not Host'}, to=playerSID)
 
 
 

@@ -129,5 +129,6 @@ socket.on('availableGames', (data) => {
  
 socket.on('startGame', (data) => {
     console.log("START THE GAME");
-    console.log(data)
+    console.log(data);
+    window.location.href = data.url;
 });
