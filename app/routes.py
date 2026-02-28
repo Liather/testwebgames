@@ -16,8 +16,11 @@ def game_file(game, filename):
     baseDir = os.path.dirname(__file__)
     gameFolder = os.path.join(baseDir, 'games', game)
     filePath = os.path.join(gameFolder, filename)
+    print(filename)
+    print(filePath)
 
     if os.path.exists(filePath):
+        print("Foudn POOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
         return send_from_directory(gameFolder, filename)
     else:
         abort(404)
