@@ -123,7 +123,7 @@ def handleStartGame(data):
 
 
     if room.isHost(playerID):
-        if selectedGame = "No game selected":
+        if selectedGame == "No game selected":
             print("poop")
         else:
             print(f'setup{selectedGame}')
