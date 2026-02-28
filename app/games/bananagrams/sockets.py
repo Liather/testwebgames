@@ -8,4 +8,4 @@ def setupGame(data):
 
 @socketio.on('joinedGame')
 def joinedGame(data):
-    print("Joined game")
+    print("QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa ")

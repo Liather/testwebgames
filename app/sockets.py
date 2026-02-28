@@ -121,25 +121,21 @@ def handleStartGame(data):
 
     selectedGame = room.getSelectedGame()
 
-
+    # make sure host is starting game
     if room.isHost(playerID):
+        # So it doesn't try to go to game/No game selected/.....
         if selectedGame == "No game selected":
-            print("poop")
+            emit('error', {'message': 'No game selected'}, to=playerSID)
+            return
         else:
-            print(f'setup{selectedGame}')
             emit(f'setup{selectedGame}', {'Start': "start"}, room=roomCode)
             emit('startGame', {'url': f"/game/{selectedGame}?code={roomCode}"}, room=roomCode)
-        else:
-            emit('error', {'message': f'No game selected'}, to=playerSID)
     else:
         emit('error', {'message': f'You are not Host. Ask "{room.getHostName()}" to start the game'}, to=playerSID)
 
 
 
 '''
-// playerList
-    // highlight host
-
 // gameData
     // selectedGame
     // gameConfig

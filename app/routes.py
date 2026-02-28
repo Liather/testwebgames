@@ -10,6 +10,18 @@ def createroom():
 def room():
     return render_template('room.html')
 
+
+@app.route('/game/<game>/<path:filename>')
+def game_file(game, filename):
+    baseDir = os.path.dirname(__file__)
+    gameFolder = os.path.join(baseDir, 'games', game)
+    filePath = os.path.join(gameFolder, filename)
+
+    if os.path.exists(filePath):
+        return send_from_directory(gameFolder, filename)
+    else:
+        abort(404)
+
 @app.route('/game/<game>')
 def game(game):
     baseDir = os.path.dirname(__file__)
