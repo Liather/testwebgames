@@ -18,5 +18,3 @@ socket.emit('joinedGame', {
     'roomCode': roomCode,
     'playerID': playerID
 });
-
-
