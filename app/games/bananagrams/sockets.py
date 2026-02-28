@@ -2,7 +2,7 @@ from app import socketio
 from flask import request
 from flask_socketio import emit
 
-@socketio.on('startBananagrams')
+@socketio.on('setupbananagrams')
 def setupGame(data):
     print("Setting up game")
 

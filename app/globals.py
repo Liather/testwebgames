@@ -1,5 +1,6 @@
 import os
 import json
+import importlib
 from app.roomManager import roomManager
 
 roomManager = roomManager()
@@ -28,6 +29,11 @@ def findGames():
                         allPresent = all(os.path.isfile(os.path.join(gamesPath, file)) for file in expectedFiles)
                         if allPresent:
                             availableGames.append(item)
+                            try:
+                                importlib.import_module(f'app.games.{item}.sockets')
+                                print(f"Loaded sockets for game: {item}")
+                            except ImportError as e:
+                                print(f"Warning: Could not load sockets for {item}: {e}")
                     except json.JSONDecodeError:
                         pass
     print("Available Games: ", availableGames)
