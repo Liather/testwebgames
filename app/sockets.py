@@ -123,7 +123,9 @@ def handleStartGame(data):
 
 
     if room.isHost(playerID):
-        if selectedGame != "No Game Selected":
+        if selectedGame = "No game selected":
+            print("poop")
+        else:
             print(f'setup{selectedGame}')
             emit(f'setup{selectedGame}', {'Start': "start"}, room=roomCode)
             emit('startGame', {'url': f"/game/{selectedGame}?code={roomCode}"}, room=roomCode)
