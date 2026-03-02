@@ -128,6 +128,9 @@ def handleStartGame(data):
             emit('error', {'message': 'No game selected'}, to=playerSID)
             return
         else:
+            # create game instance
+            room.startGameInstance()
+
             emit(f'setup{selectedGame}', {'Start': "start"}, room=roomCode)
             emit('startGame', {'url': f"/game/{selectedGame}?code={roomCode}"}, room=roomCode)
     else:

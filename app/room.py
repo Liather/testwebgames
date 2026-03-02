@@ -1,3 +1,5 @@
+import importlib
+
 class Room:
     def __init__(self, roomCode, playerID, playerSID):
         self.roomCode = roomCode
@@ -61,3 +63,12 @@ class Room:
 
     def getHostName(self):
         return self.players[self.hostPlayerID]["playerNickname"]
+
+    def startGameInstance(self):
+        self.gameData = {}
+
+        print("seleted game: ", self.selectedGame)
+        module = importlib.import_module(f"app.games.{self.selectedGame}.game")
+        print(module)
+        GameClass = getattr(module, "Game")
+        self.game = GameClass(self)

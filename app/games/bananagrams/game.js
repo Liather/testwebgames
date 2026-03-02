@@ -11,8 +11,6 @@ if (!playerID) { // TODO - OR IF PLAYERID IS NOT PART OF PLAYERS IN ROOM
 }
 
 const roomCode = new URLSearchParams(window.location.search).get('code');
-const roomCodeTitle = document.getElementById("title");
-roomCodeTitle.textContent = `ROOM CODE: ${roomCode}`;
 
 socket.emit('joinedGame', {
     'roomCode': roomCode,
