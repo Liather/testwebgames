@@ -8,4 +8,8 @@ def setupGame(data):
 
 @socketio.on('joinedGame')
 def joinedGame(data):
-    print("QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa ")
+    playerSID = request.sid
+    playerID = data["playerID"]
+    roomCode = data['roomCode']
+
+    print(playerID, " has joined game: ", roomCode)
