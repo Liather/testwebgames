@@ -1,4 +1,5 @@
 from app import socketio
+from app.globals import roomManager
 from flask import request
 from flask_socketio import emit
 
@@ -13,3 +14,9 @@ def joinedGame(data):
     roomCode = data['roomCode']
 
     print(playerID, " has joined game: ", roomCode)
+
+    room = roomManager.getRoom(roomCode)
+
+    playerData = room.game.getPlayerState(playerID)
+
+    emit('playerData', playerData, to=playerSID)

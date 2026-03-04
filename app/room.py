@@ -66,9 +66,9 @@ class Room:
 
     def startGameInstance(self):
         self.gameData = {}
-
-        print("seleted game: ", self.selectedGame)
         module = importlib.import_module(f"app.games.{self.selectedGame}.game")
-        print(module)
         GameClass = getattr(module, "Game")
         self.game = GameClass(self)
+    
+    def addGameData(self, gameData):
+        self.gameData = gameData

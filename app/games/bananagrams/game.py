@@ -35,8 +35,8 @@ class Game:
                 "tileTray": playerTiles
             }
 
-        print(gameData)
-        #room.addGameData(gameData)
+        self.room.addGameData(gameData)
+        print("Room: ", self.room)
     
     def generateTiles(self):
         return list("AAAAAAAAAAAABBBCCCDDDDEEEEEEEEEEEEEEEEEFFFGGHHHIIIIIIIIIIIJJKKLLLLMMNNNNNNNNOOOOOOOOOOOPPQRRRRRRRRRSSSSSSTTTTTTTTUUUUUUVVVWWWXXYYZZ")
@@ -44,4 +44,17 @@ class Game:
     def createEmptyBoard(self, size):
         return [['' for _ in range(size)] for _ in range(size)]
     
-    
+    def getPlayerTiles(self):
+        self.room.getPlayerState(playerID)
+
+    def test(self):
+        print(self.room.gameData)
+
+    # make only fetch players data. Not all data then filter player specific
+    def getPlayerState(self, playerID):
+        gameData = self.room.gameData
+
+        return {
+            "tileTray": gameData["players"][playerID]["tileTray"],
+            "board": gameData["players"][playerID]["board"]
+        }

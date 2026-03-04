@@ -16,3 +16,7 @@ socket.emit('joinedGame', {
     'roomCode': roomCode,
     'playerID': playerID
 });
+
+socket.on('playerData', (data) => {
+    console.log(data);
+})
