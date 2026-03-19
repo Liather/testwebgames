@@ -10,6 +10,8 @@ if (!playerID) { // TODO - OR IF PLAYERID IS NOT PART OF PLAYERS IN ROOM
         // - Let's them know why they were sent back to the home page
 }
 
+let selectedTile = null;
+
 const roomCode = new URLSearchParams(window.location.search).get('code');
 
 socket.emit('joinedGame', {
@@ -17,6 +19,98 @@ socket.emit('joinedGame', {
     'playerID': playerID
 });
 
-socket.on('playerData', (data) => {
+// error messages
+socket.on('error', (data) => {
+    alert(data.message);
+
+    //send player back to index if no uuid
+    if (data.message == "invalidPlayer") {
+        window.location.href = `/`;
+    }
+})
+
+socket.on('gameData', (data) => {
     console.log(data);
+    selectedTile = null;
+
+    // render tiletray ------------------------------------------------
+    let tileTray = document.getElementById("tileTray");
+    tileTray.innerHTML = " ";
+    
+    data.tileTray.forEach((tile, index) => {
+        const tileDiv = document.createElement('div');
+        tileDiv.className = 'tile';
+        tileDiv.textContent = tile;
+        selectedTile = tile;
+    
+        tileDiv.addEventListener('click', () => {
+        selectedTile = {
+            source: 'tray',
+            tile: tile,
+            trayIndex: index
+        };
+        console.log('Selected tray tile:', selectedTile);
+    });
+
+        tileTray.appendChild(tileDiv);
+    });
+
+    // render board ------------------------------------------------
+    let board = document.getElementById("board");
+    board.innerHTML = " ";
+
+    data.board.forEach((row, y) => {
+        row.forEach((cell, x) => {
+            const cellDiv = document.createElement('div');
+            cellDiv.className = 'cell';
+            cellDiv.textContent = cell;
+
+            // SELECT TILE FROM TRAY
+            cellDiv.addEventListener('click', () => {
+                if (cell !== '') {
+                    selectedTile = {
+                        source: 'board',
+                        tile: cell,
+                        x: x,
+                        y: y
+                    };
+                    console.log("Selected board tile", selectedTile);
+                    return;
+                }
+
+
+                if (cell === '' && selectedTile) {
+
+                    // PLACE TILE
+                    if (selectedTile.source === 'tray') {
+                        console.log("placetile")
+                        socket.emit('placeTile', {
+                            roomCode,
+                            playerID,
+                            trayIndex: selectedTile.trayIndex,
+                            x,
+                            y
+                        });
+                    }
+
+                    // MOVE TILE
+                    if (selectedTile.source === 'board') {
+                        console.log("moveTile")
+                        socket.emit('moveTile', {
+                            roomCode,
+                            playerID,
+                            fromX: selectedTile.x,
+                            fromY: selectedTile.y,
+                            toX: x,
+                            toY: y
+                        });
+                    }
+
+                    selectedTile = null;
+                }
+            });
+
+            board.appendChild(cellDiv);
+        });
+    });
 })
