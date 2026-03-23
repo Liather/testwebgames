@@ -74,10 +74,16 @@ def peelRequest(data):
     room = roomManager.getRoom(roomCode)
 
     if room.game.isPlayerTrayEmpty(playerID):
-        # add tile to players tileTray
         room.game.peel()
-        playerData = room.game.getPlayerData(playerID)
-        emit('gameData', playerData, room=roomCode)
+
+        players = room.getPlayerData()
+
+        for player in players:
+            pid = player["playerID"]
+            sid = player["playerSID"]
+
+            playerData = room.game.getPlayerData(pid)
+            emit('gameData', playerData, to=sid)
 
     
     # if players tiles are empty
