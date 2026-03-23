@@ -35,12 +35,16 @@ class Room:
         players = []
         for player in self.players:
             players.append({
+                "playerSID": self.players[player]["playerSID"],
                 "playerID": player,
                 "playerNickname": self.players[player]["playerNickname"],
                 "playerRole": self.players[player]["playerRole"],
                 "isHost": player == self.hostPlayerID
             })
         return players
+
+    def getAllPlayers(self):
+        return self.players
 
     def isHost(self, playerID):
         if playerID == self.hostPlayerID:
