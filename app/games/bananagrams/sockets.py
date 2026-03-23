@@ -1,7 +1,7 @@
 from app import socketio
 from app.globals import roomManager
 from flask import request
-from flask_socketio import emit
+from flask_socketio import emit, join_room
 
 @socketio.on('setupbananagrams')
 def setupGame(data):
@@ -13,15 +13,18 @@ def joinedGame(data):
     playerID = data["playerID"]
     roomCode = data['roomCode']
 
+    join_room(roomCode)
+
     print(playerID, " has joined game: ", roomCode)
 
     room = roomManager.getRoom(roomCode)
 
+    room.updatePlayerSID(playerID, playerSID)
     playerData = room.game.getPlayerData(playerID)
 
     emit('gameData', playerData, to=playerSID)
 
-@socketio.on('placeTile')
+@socketio.on('placeTileRequest')
 def placeTile(data):
     playerSID = request.sid
     playerID = data["playerID"]
@@ -41,7 +44,7 @@ def placeTile(data):
     else:
         emit('error', {'message': 'No game selected'}, to=playerSID)
 
-@socketio.on('moveTile')
+@socketio.on('moveTileRequest')
 def moveTile(data):
     playerSID = request.sid
     playerID = data["playerID"]
@@ -61,3 +64,24 @@ def moveTile(data):
         emit('gameData', playerData, to=playerSID)
     else:
         emit('error', {'message': 'No game selected'}, to=playerSID)
+
+@socketio.on('peelRequest')
+def peelRequest(data):
+    playerSID = request.sid
+    playerID = data['playerID']
+    roomCode = data["roomCode"]
+
+    room = roomManager.getRoom(roomCode)
+
+    if room.game.isPlayerTrayEmpty(playerID):
+        # add tile to players tileTray
+        room.game.peel()
+        playerData = room.game.getPlayerData(playerID)
+        emit('gameData', playerData, room=roomCode)
+
+    
+    # if players tiles are empty
+    # if all tile are connected
+    # if all words are words
+
+    # -> give every player 1 tile

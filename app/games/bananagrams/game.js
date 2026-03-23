@@ -19,6 +19,14 @@ socket.emit('joinedGame', {
     'playerID': playerID
 });
 
+// Event listeners
+document.getElementById('peelButton').addEventListener('click', () => {
+    socket.emit('peelRequest', {
+        "playerID": playerID,
+        "roomCode": roomCode
+    });
+});
+
 // error messages
 socket.on('error', (data) => {
     alert(data.message);
@@ -29,6 +37,7 @@ socket.on('error', (data) => {
     }
 })
 
+// WHEN GAME DATA IS SENT TO THE PLAYER
 socket.on('gameData', (data) => {
     console.log(data);
     selectedTile = null;
@@ -84,7 +93,7 @@ socket.on('gameData', (data) => {
                     // PLACE TILE
                     if (selectedTile.source === 'tray') {
                         console.log("placetile")
-                        socket.emit('placeTile', {
+                        socket.emit('placeTileRequest', {
                             roomCode,
                             playerID,
                             trayIndex: selectedTile.trayIndex,
@@ -96,7 +105,7 @@ socket.on('gameData', (data) => {
                     // MOVE TILE
                     if (selectedTile.source === 'board') {
                         console.log("moveTile")
-                        socket.emit('moveTile', {
+                        socket.emit('moveTileRequest', {
                             roomCode,
                             playerID,
                             fromX: selectedTile.x,

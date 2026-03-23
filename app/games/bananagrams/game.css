@@ -55,8 +55,8 @@ body {
 /* 20x20 grid */
 #board {
     display: grid;
-    grid-template-columns: repeat(20, 32px);
     grid-template-rows: repeat(20, 32px);
+    grid-template-columns: repeat(20, 32px);
     gap: 2px;
     background: #444;
     padding: 5px;

@@ -1,7 +1,7 @@
 from app.globals import roomManager
 import random
 
-TILES_PER_PLAYER = 21
+TILES_PER_PLAYER = 2
 BOARD_SIZE = 20
 
 class Game:
@@ -44,9 +44,6 @@ class Game:
     def createEmptyBoard(self, size):
         return [["" for _ in range(size)] for _ in range(size)]
 
-    #def test(self):
-        #print(self.room.gameData)
-
     def getPlayerData(self, playerID):
         gameData = self.room.gameData
 
@@ -54,6 +51,27 @@ class Game:
             "tileTray": gameData["players"][playerID]["tileTray"],
             "board": gameData["players"][playerID]["board"]
         }
+    
+    def isPlayerTrayEmpty(self, playerID):
+        if (self.room.gameData['players'][playerID]['tileTray'] == []):
+            return True
+        else:
+            return False
+
+    def peel(self):
+        gameData = self.room.gameData
+        tilesRemaining = gameData['global']['tilesRemaining']
+
+        if len(tilesRemaining) < 10:
+            return False
+
+        players = gameData['players']
+
+        for playerID in players:
+            tile = tilesRemaining.pop(0)
+            players[playerID]['tileTray'].append(tile)
+        
+        return True
 
     def placeTile(self, playerID, x, y, tile):
         self.room.gameData['players'][playerID]['board'][y][x] = tile
