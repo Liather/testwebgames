@@ -1,14 +1,15 @@
 from app.globals import roomManager
 import random
 
-TILES_PER_PLAYER = 2
+TILES_PER_PLAYER = 5
 BOARD_SIZE = 15
 
 class Game:
     def __init__(self, room):
         self.room = room
         self.setupGame()
-
+        self.dictionary = self.loadDictionary()
+        
     def setupGame(self):
         tiles = self.generateTiles()
         random.shuffle(tiles)
@@ -105,6 +106,10 @@ class Game:
         else:
             return False
 
+    def loadDictionary(self):
+            with open("app/games/bananagrams/dictionary.txt", "r") as f:
+                return set(word.strip().upper() for word in f)
+
     def areTilesConnected(self, board):
         size = len(board)
         
@@ -140,3 +145,51 @@ class Game:
                         stack.append((nx, ny))
 
         return len(visited) == totalTiles
+
+    def getWords(self, board):
+        size = len(board)
+        words = []
+
+        # HORRIZONTAL WORDS
+        for y in range(size):
+            currentWord = ""
+
+            for x in range(size):
+                if board[y][x] != "":
+                    currentWord += board[y][x]
+                else:
+                    if len(currentWord) > 1:
+                        words.append(currentWord)
+                    currentWord = ""
+
+            if len(currentWord) > 1:
+                words.append(currentWord)
+
+        # VERTICAL WORDS
+        for x in range(size):
+            currentWord = ""
+
+            for y in range(size):
+                if board[y][x] != "":
+                    currentWord += board[y][x]
+                else:
+                    if len(currentWord) > 1:
+                        words.append(currentWord)
+                    currentWord = ""
+
+            if len(currentWord) > 1:
+                words.append(currentWord)
+
+        return words
+
+    def validateWords(self, words):
+        invalidWords = []
+
+        for word in words:
+            if word.upper() not in self.dictionary:
+                invalidWords.append(word)
+
+        if invalidWords:
+            return False, invalidWords
+
+        return True, []

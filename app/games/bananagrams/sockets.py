@@ -77,7 +77,14 @@ def peelRequest(data):
         playerData = room.game.getPlayerData(playerID)
         board = playerData['board']
         if room.game.areTilesConnected(board):
-            room.game.peel()
+            words = room.game.getWords(board)
+            valid, invalidWords = room.game.validateWords(words)
+            
+            print(valid)
+            print(invalidWords)
+
+            if not invalidWords:
+                room.game.peel()
 
         players = room.getAllPlayers()
 
