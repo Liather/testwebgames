@@ -1,7 +1,7 @@
 from app.globals import roomManager
 import random
 
-TILES_PER_PLAYER = 21
+TILES_PER_PLAYER = 2
 BOARD_SIZE = 15
 
 class Game:
@@ -104,3 +104,39 @@ class Game:
             return True
         else:
             return False
+
+    def areTilesConnected(self, board):
+        size = len(board)
+        
+        visited = set()
+        totalTiles = 0
+        start = None
+
+        for y in range(size):
+            for x in range(size):
+                if board[y][x] != "":
+                    totalTiles += 1
+                    if start is None:
+                        start = (x, y)
+
+        if totalTiles == 0:
+            return False
+
+        stack = [start]
+
+        while stack:
+            x, y = stack.pop()
+
+            if (x, y) in visited:
+                continue
+
+            visited.add((x, y))
+
+            for dx, dy in [(0,1), (0,-1), (1,0), (-1,0)]:
+                nx, ny = x + dx, y + dy
+
+                if 0 <= nx < size and 0 <= ny < size:
+                    if board[ny][nx] != "" and (nx, ny) not in visited:
+                        stack.append((nx, ny))
+
+        return len(visited) == totalTiles

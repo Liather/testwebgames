@@ -74,7 +74,10 @@ def peelRequest(data):
     room = roomManager.getRoom(roomCode)
 
     if room.game.isPlayerTrayEmpty(playerID):
-        room.game.peel()
+        playerData = room.game.getPlayerData(playerID)
+        board = playerData['board']
+        if room.game.areTilesConnected(board):
+            room.game.peel()
 
         players = room.getAllPlayers()
 
