@@ -167,13 +167,3 @@ button:active {
     grid-column: 2;
     grid-row: 3;
 }
-
-@media (max-width: 600px) {
-    #boardContainer {
-        margin-top: 15px;
-    }
-
-    #controls {
-        margin-top: 15px;
-    }
-}
