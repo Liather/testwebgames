@@ -99,3 +99,22 @@ def peelRequest(data):
     # if all words are words
 
     # -> give every player 1 tile
+
+@socketio.on('shiftTiles')
+def shiftTiles(data):
+    playerSID = request.sid
+    playerID = data['playerID']
+    roomCode = data["roomCode"]
+
+    direction = data['direction']
+
+    room = roomManager.getRoom(roomCode)
+
+    playerData = room.game.getPlayerData(playerID)
+    board = playerData['board']
+
+    if room.game.shiftBoard(board, direction):
+        data = room.game.getPlayerData(playerID)
+        emit('gameData', data, to=playerSID)
+    else:
+        emit('error', {'message': 'Cannot shift up'}, to=playerSID)

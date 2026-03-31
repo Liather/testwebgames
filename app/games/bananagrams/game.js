@@ -27,6 +27,38 @@ document.getElementById('peelButton').addEventListener('click', () => {
     });
 });
 
+document.getElementById('upButton').addEventListener('click', () => {
+    socket.emit('shiftTiles', {
+        "playerID": playerID,
+        "roomCode": roomCode,
+        "direction": "up"
+    });
+});
+
+document.getElementById('downButton').addEventListener('click', () => {
+    socket.emit('shiftTiles', {
+        "playerID": playerID,
+        "roomCode": roomCode,
+        "direction": "down"
+    });
+});
+
+document.getElementById('leftButton').addEventListener('click', () => {
+    socket.emit('shiftTiles', {
+        "playerID": playerID,
+        "roomCode": roomCode,
+        "direction": "left"
+    });
+});
+
+document.getElementById('rightButton').addEventListener('click', () => {
+    socket.emit('shiftTiles', {
+        "playerID": playerID,
+        "roomCode": roomCode,
+        "direction": "right"
+    });
+});
+
 // error messages
 socket.on('error', (data) => {
     alert(data.message);
@@ -74,6 +106,10 @@ socket.on('gameData', (data) => {
             cellDiv.className = 'cell';
             cellDiv.textContent = cell;
 
+            if (cell !== '') {
+                cellDiv.className = 'poo'
+            }
+            
             // SELECT TILE FROM TRAY
             cellDiv.addEventListener('click', () => {
                 if (cell !== '') {

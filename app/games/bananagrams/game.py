@@ -193,3 +193,48 @@ class Game:
             return False, invalidWords
 
         return True, []
+
+    def shiftBoard(self, board, direction):
+        size = len(board)
+
+        tiles = []
+        for y in range(size):
+            for x in range(size):
+                if board[y][x] != "":
+                    tiles.append((x, y, board[y][x]))
+
+        tilePositions = {(x, y) for x, y, _ in tiles}
+
+        directions = {
+            "up": (0, -1),
+            "down": (0, 1),
+            "left": (-1, 0),
+            "right": (1, 0)
+        }
+
+        dx, dy = directions[direction]
+
+        # Validate move
+        for x, y, tile in tiles:
+            nx, ny = x + dx, y + dy
+
+            if not (0 <= nx < size and 0 <= ny < size):
+                return False
+
+            if board[ny][nx] != "" and (nx, ny) not in tilePositions:
+                return False
+
+        # Apply move
+        newBoard = [["" for _ in range(size)] for _ in range(size)]
+
+        for x, y, tile in tiles:
+            nx, ny = x + dx, y + dy
+            newBoard[ny][nx] = tile
+
+        # Copy back
+        for y in range(size):
+            for x in range(size):
+                board[y][x] = newBoard[y][x]
+
+        print("board shifted")
+        return True
