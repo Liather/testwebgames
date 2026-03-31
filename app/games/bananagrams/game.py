@@ -1,7 +1,7 @@
 from app.globals import roomManager
 import random
 
-TILES_PER_PLAYER = 5
+TILES_PER_PLAYER = 21
 BOARD_SIZE = 15
 
 class Game:
